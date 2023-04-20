@@ -1,6 +1,6 @@
 {
   "name": "@openpm/langchain",
-  "version": "0.1.0",
+  "version": "0.1.1",
   "license": "MIT",
   "author": "Alex MacCaw",
   "module": "dist/openpm-langchain.esm.js",
