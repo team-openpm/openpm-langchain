@@ -20,7 +20,8 @@
     "lint": "tsdx lint",
     "prepare": "tsdx build",
     "size": "size-limit",
-    "analyze": "size-limit --why"
+    "analyze": "size-limit --why",
+    "example:klarna": "tsx ./examples/klarna.ts"
   },
   "peerDependencies": {
     "langchain": "^0.0.59"
@@ -52,6 +53,8 @@
     "size-limit": "^8.2.4",
     "tsdx": "^0.14.1",
     "tslib": "^2.5.0",
+    "tsx": "^3.12.6",
     "typescript": "^5.0.4"
-  }
+  },
+  "dependencies": {}
 }
