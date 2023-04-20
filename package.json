@@ -21,7 +21,7 @@
     "prepare": "tsdx build",
     "size": "size-limit",
     "analyze": "size-limit --why",
-    "example:klarna": "tsx ./examples/klarna.ts"
+    "examples:klarna": "tsx ./examples/klarna.ts"
   },
   "peerDependencies": {
     "langchain": "^0.0.59"
