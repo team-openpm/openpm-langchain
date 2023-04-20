@@ -22,6 +22,9 @@ jobs:
       - name: Install deps and build (with cache)
         uses: bahmutov/npm-install@v1
 
+      - name: Install peer deps
+        run: yarn add langchain
+
       - name: Lint
         run: yarn lint
 
