@@ -1,6 +1,6 @@
 import { initializeAgentExecutorWithOptions } from 'langchain/agents'
 import { ChatOpenAI } from 'langchain/chat_models/openai'
-import { RequestsGetTool, RequestsPostTool } from 'langchain/tools'
+import { RequestsGetTool, RequestsPostTool, Tool } from 'langchain/tools'
 
 // Typically imported like this:
 // import { OpenpmTool } from '@openpm/langchain'
@@ -9,7 +9,7 @@ import { OpenpmTool, ApiRequestsTool, openpmRequestDecorator } from '../src'
 const apiKey = process.env.OPENPM_API_KEY
 
 async function main() {
-  const tools = [
+  const tools: Tool[] = [
     new ApiRequestsTool({
       onBeforeRequest: openpmRequestDecorator({ apiKey }),
     }),

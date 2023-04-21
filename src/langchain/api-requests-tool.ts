@@ -25,8 +25,15 @@ export class ApiRequestsTool extends Tool implements RequestTool {
         method: string
       }
 
+      const headers = new Headers()
+
+      if (data) {
+        headers.set('Content-Type', 'application/json')
+      }
+
       let request = new Request(url, {
         method,
+        headers,
         body: data ? JSON.stringify(data) : undefined,
       })
 
@@ -38,6 +45,12 @@ export class ApiRequestsTool extends Tool implements RequestTool {
 
       if (this.onBeforeResponse) {
         response = this.onBeforeResponse(response)
+      }
+
+      if (!response.ok) {
+        throw new Error(
+          `Request failed with status ${response.status} ${response.statusText}`
+        )
       }
 
       return response.text()

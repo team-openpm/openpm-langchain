@@ -9,8 +9,8 @@ export function openpmRequestDecorator({ apiKey }: { apiKey?: string }) {
       return request
     }
 
-    if (!apiKey) {
-      apiKey = process.env.OPENPM_API_KEY
+    if (!apiKey && typeof process !== 'undefined') {
+      apiKey = process?.env?.OPENPM_API_KEY
     }
 
     if (apiKey) {
