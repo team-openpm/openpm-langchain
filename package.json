@@ -58,6 +58,6 @@
     "typescript": "^5.0.4"
   },
   "dependencies": {
-    "langchain": "^0.0.60"
+    "langchain": "^0.0.61"
   }
 }

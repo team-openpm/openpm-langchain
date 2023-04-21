@@ -1,14 +1,30 @@
-import { Tool } from 'langchain/tools'
+import { StructuredTool } from 'langchain/tools'
 import { getPackage } from '../openpm/packages'
 import { jsonStripNewlines } from './utils'
 import { Package } from '../openpm/types'
+import { z } from 'zod'
+import { Callbacks } from 'langchain/dist/callbacks'
 
-export class OpenpmTool extends Tool {
+export class OpenpmTool extends StructuredTool {
   package: Package
+
+  schema = z
+    .object({ input: z.string().optional() })
+    .transform(obj => obj.input)
 
   constructor(pkg: Package) {
     super()
     this.package = pkg
+  }
+
+  call(
+    arg: string | z.input<this['schema']>,
+    callbacks?: Callbacks
+  ): Promise<string> {
+    return super.call(
+      typeof arg === 'string' || !arg ? { input: arg } : arg,
+      callbacks
+    )
   }
 
   /** @ignore */

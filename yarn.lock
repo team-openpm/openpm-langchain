@@ -4733,10 +4733,10 @@ kleur@^3.0.3:
   resolved "https://registry.yarnpkg.com/kleur/-/kleur-3.0.3.tgz#a79c9ecc86ee1ce3fa6206d1216c501f147fc07e"
   integrity sha512-eTIzlVOSUR+JxdDFepEYcBMtZ9Qqdef+rnzWdRZuMbOywu5tO2w2N7rqjoANZ5k9vywhL6Br1VRjUIgTQx4E8w==
 
-langchain@^0.0.60:
-  version "0.0.60"
-  resolved "https://registry.yarnpkg.com/langchain/-/langchain-0.0.60.tgz#9a79a263dce6062919cbf3e087d730a918114aa3"
-  integrity sha512-6joDhvWcWTyNhboVKvtvJWIWRCoSo9EoFQ8Jifssg1vrLrdFbeTAafSTVYEjPJe2a79udRBWOdMkzMzcTC6JuA==
+langchain@^0.0.61:
+  version "0.0.61"
+  resolved "https://registry.yarnpkg.com/langchain/-/langchain-0.0.61.tgz#355bb494743d4984858819d087224235ab41c6d0"
+  integrity sha512-6cdMKO6R2Fthh6LwEENbir/skQjPexltKKSyRAdLGZ5BgUaE/qCwPf8fMasQw0ZtB0lhf7MAKW5YTEj7HJcxFQ==
   dependencies:
     "@anthropic-ai/sdk" "^0.4.3"
     "@dqbd/tiktoken" "^1.0.4"
