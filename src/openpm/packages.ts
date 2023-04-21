@@ -14,7 +14,7 @@ export async function getPackage(
     url.searchParams.set('proxy', 'true')
   }
 
-  const request = await fetch(url)
+  const request = await fetch(url.toString())
 
   if (!request.ok) {
     throw new Error(

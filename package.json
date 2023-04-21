@@ -24,7 +24,7 @@
     "examples:klarna": "tsx ./examples/klarna.ts"
   },
   "peerDependencies": {
-    "langchain": "^0.0.59"
+    "langchain": "^0.0.60"
   },
   "husky": {
     "hooks": {

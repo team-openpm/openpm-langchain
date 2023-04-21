@@ -4713,10 +4713,10 @@ kleur@^3.0.3:
   resolved "https://registry.yarnpkg.com/kleur/-/kleur-3.0.3.tgz#a79c9ecc86ee1ce3fa6206d1216c501f147fc07e"
   integrity sha512-eTIzlVOSUR+JxdDFepEYcBMtZ9Qqdef+rnzWdRZuMbOywu5tO2w2N7rqjoANZ5k9vywhL6Br1VRjUIgTQx4E8w==
 
-langchain@^0.0.59:
-  version "0.0.59"
-  resolved "https://registry.yarnpkg.com/langchain/-/langchain-0.0.59.tgz#ac07180f2062a9e62e3707ec6ab4218ed61d179d"
-  integrity sha512-aggECWjvunoOnh2v5iCjaTp+CMsPW69xBFGqle8o5waMfpRd4v+YYASFqeihp0pDrwM8OtSKCJUhYCROMZ35lw==
+langchain@^0.0.60:
+  version "0.0.60"
+  resolved "https://registry.yarnpkg.com/langchain/-/langchain-0.0.60.tgz#9a79a263dce6062919cbf3e087d730a918114aa3"
+  integrity sha512-6joDhvWcWTyNhboVKvtvJWIWRCoSo9EoFQ8Jifssg1vrLrdFbeTAafSTVYEjPJe2a79udRBWOdMkzMzcTC6JuA==
   dependencies:
     "@anthropic-ai/sdk" "^0.4.3"
     "@dqbd/tiktoken" "^1.0.4"
@@ -4733,6 +4733,7 @@ langchain@^0.0.59:
     uuid "^9.0.0"
     yaml "^2.2.1"
     zod "^3.21.4"
+    zod-to-json-schema "^3.20.4"
 
 language-subtag-registry@~0.3.2:
   version "0.3.22"
@@ -7104,6 +7105,11 @@ yargs@^15.3.1:
     which-module "^2.0.0"
     y18n "^4.0.0"
     yargs-parser "^18.1.2"
+
+zod-to-json-schema@^3.20.4:
+  version "3.20.4"
+  resolved "https://registry.yarnpkg.com/zod-to-json-schema/-/zod-to-json-schema-3.20.4.tgz#155f687c5a059fdc0f1bb3ff32d6e9200036b6f4"
+  integrity sha512-Un9+kInJ2Zt63n6Z7mLqBifzzPcOyX+b+Exuzf7L1+xqck9Q2EPByyTRduV3kmSPaXaRer1JCsucubpgL1fipg==
 
 zod@^3.21.4:
   version "3.21.4"
