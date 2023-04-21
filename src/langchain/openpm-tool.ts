@@ -5,6 +5,7 @@ import { Package } from '../openpm/types'
 
 export interface OpenToolParams {
   apiKey?: string
+  proxy?: boolean
 }
 
 export class OpenpmTool extends Tool implements OpenToolParams {
@@ -22,7 +23,7 @@ export class OpenpmTool extends Tool implements OpenToolParams {
     const prompt = [`Usage Guide: ${this.package.machine_description}`]
 
     if (this.apiKey) {
-      prompt.push(`OpenPM API Key: ${this.apiKey}`)
+      prompt.push(`Openpm API Key for requests to openpm.ai: ${this.apiKey}`)
     }
 
     prompt.push(`OpenAPI Spec: ${jsonStripNewlines(this.package.openapi)}`)
@@ -39,7 +40,7 @@ export class OpenpmTool extends Tool implements OpenToolParams {
   }
 
   static async fromPackageId(packageId: string, params: OpenToolParams = {}) {
-    const pkg = await getPackage(packageId)
+    const pkg = await getPackage(packageId, { proxy: params.proxy })
     return new OpenpmTool(pkg, params)
   }
 }
