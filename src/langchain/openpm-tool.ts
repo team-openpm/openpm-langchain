@@ -1,50 +1,45 @@
 import { Tool } from 'langchain/tools'
-import { AIPluginTool } from 'langchain/tools'
 import { getPackage } from '../openpm/packages'
 import { jsonStripNewlines } from './utils'
+import { Package } from '../openpm/types'
 
 export interface OpenToolParams {
-  name: string
-  description: string
-  apiSpec: string
+  apiKey?: string
 }
 
 export class OpenpmTool extends Tool implements OpenToolParams {
-  private _name: string
+  package: Package
+  apiKey?: string
 
-  private _description: string
-
-  apiSpec: string
-
-  get name() {
-    return this._name
-  }
-
-  get description() {
-    return this._description
-  }
-
-  constructor(params: OpenToolParams) {
+  constructor(pkg: Package, params: OpenToolParams = {}) {
     super()
-    this._name = params.name
-    this._description = params.description
-    this.apiSpec = params.apiSpec
+    this.package = pkg
+    this.apiKey = params.apiKey || process.env.OPENPM_API_KEY
   }
 
   /** @ignore */
   async _call(_input: string) {
-    return this.apiSpec
+    const prompt = [`Usage Guide: ${this.package.machine_description}`]
+
+    if (this.apiKey) {
+      prompt.push(`OpenPM API Key: ${this.apiKey}`)
+    }
+
+    prompt.push(`OpenAPI Spec: ${jsonStripNewlines(this.package.openapi)}`)
+
+    return prompt.join('\n')
   }
 
-  static async fromPackageId(packageId: string) {
+  get name(): string {
+    return this.package.name
+  }
+
+  get description(): string {
+    return `Call this tool to get the OpenAPI spec (and usage guide) for interacting with the ${this.package.name} API. You should only call this ONCE! What is the ${this.package.name} API useful for? ${this.package.description}`
+  }
+
+  static async fromPackageId(packageId: string, params: OpenToolParams = {}) {
     const pkg = await getPackage(packageId)
-
-    return new AIPluginTool({
-      name: pkg.machine_name,
-      description: `Call this tool to get the OpenAPI spec (and usage guide) for interacting with the ${pkg.name} API. You should only call this ONCE! What is the ${pkg.name} API useful for? ${pkg.description}`,
-      apiSpec: `Usage Guide: ${pkg.machine_description}
-
-OpenAPI Spec: ${jsonStripNewlines(pkg.openapi)}`,
-    })
+    return new OpenpmTool(pkg, params)
   }
 }
