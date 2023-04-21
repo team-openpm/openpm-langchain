@@ -49,6 +49,7 @@
   ],
   "devDependencies": {
     "@size-limit/preset-small-lib": "^8.2.4",
+    "hnswlib-node": "^1.4.2",
     "husky": "^8.0.3",
     "size-limit": "^8.2.4",
     "tsdx": "^0.14.1",
@@ -56,5 +57,7 @@
     "tsx": "^3.12.6",
     "typescript": "^5.0.4"
   },
-  "dependencies": {}
+  "dependencies": {
+    "langchain": "^0.0.60"
+  }
 }

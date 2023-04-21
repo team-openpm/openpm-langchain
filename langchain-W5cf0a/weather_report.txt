@@ -1,0 +1,6 @@
+Weather Report for San Francisco on 4/21/2023:
+
+Morning: 53°, Chance of Rain 1%
+Afternoon: 59°, Chance of Rain 0%
+Evening: 52°, Chance of Rain 3%
+Overnight: 48°, Chance of Rain 2%

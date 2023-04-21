@@ -1,4 +1,4 @@
-import { StructuredTool, ToolParams } from 'langchain/dist/tools/base'
+import { ToolParams, StructuredTool } from 'langchain/tools'
 import { z } from 'zod'
 
 export interface RequestTool extends ToolParams {
@@ -7,7 +7,7 @@ export interface RequestTool extends ToolParams {
 }
 
 export class ApiRequestsTool extends StructuredTool {
-  name = 'api_requests'
+  name = 'openapi_requests'
   onBeforeRequest?: (request: Request) => Request
   onBeforeResponse?: (response: Response) => Response
 
@@ -65,7 +65,7 @@ export class ApiRequestsTool extends StructuredTool {
     }
   }
 
-  description = `A portal for making GET, POST, PUT, and DELETE requests to any APIs found through Openpm. 
+  description = `A portal for making GET, POST, PUT, and DELETE requests to APIs found through Openpm. 
     Use this tool only for requests made to APIs that you already have the OpenAPI spec for.
     Input should be a json string with three keys: "url", "method" and "data".
     Url is a string, method is a string, and data is a dictionary of key-value pairs you want to send to the url as a JSON body.
