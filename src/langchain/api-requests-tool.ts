@@ -1,36 +1,30 @@
-import { ToolParams, StructuredTool } from 'langchain/tools'
-import { z } from 'zod'
+import { Tool } from 'langchain/tools'
 
-export interface RequestTool extends ToolParams {
+export interface RequestTool {
   onBeforeRequest?: (request: Request) => Request
   onBeforeResponse?: (response: Response) => Response
 }
 
-export class ApiRequestsTool extends StructuredTool {
-  name = 'openapi_requests'
+export class ApiRequestsTool extends Tool implements RequestTool {
+  name = 'api_requests'
   onBeforeRequest?: (request: Request) => Request
   onBeforeResponse?: (response: Response) => Response
 
-  schema = z.object({
-    url: z.string(),
-    method: z.string(),
-    data: z.any().optional(),
-  })
-
-  constructor({
-    verbose,
-    callbacks,
-    onBeforeRequest,
-    onBeforeResponse,
-  }: RequestTool = {}) {
-    super(verbose, callbacks)
-    this.onBeforeRequest = onBeforeRequest
-    this.onBeforeResponse = onBeforeResponse
+  constructor(options: RequestTool = {}) {
+    super()
+    this.onBeforeRequest = options.onBeforeRequest
+    this.onBeforeResponse = options.onBeforeResponse
   }
 
   /** @ignore */
-  async _call({ url, data, method }: z.infer<typeof this.schema>) {
+  async _call(input: string) {
     try {
+      const { url, data, method } = JSON.parse(input) as {
+        url: string
+        data: any | undefined
+        method: string
+      }
+
       const headers = new Headers()
 
       if (data) {
@@ -65,7 +59,7 @@ export class ApiRequestsTool extends StructuredTool {
     }
   }
 
-  description = `A portal for making GET, POST, PUT, and DELETE requests to APIs found through Openpm. 
+  description = `A portal for making GET, POST, PUT, and DELETE requests to any APIs found through Openpm. 
     Use this tool only for requests made to APIs that you already have the OpenAPI spec for.
     Input should be a json string with three keys: "url", "method" and "data".
     Url is a string, method is a string, and data is a dictionary of key-value pairs you want to send to the url as a JSON body.
