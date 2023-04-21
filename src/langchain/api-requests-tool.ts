@@ -6,7 +6,7 @@ export interface RequestTool {
 }
 
 export class ApiRequestsTool extends Tool implements RequestTool {
-  name = 'api_requests'
+  name = 'openpm_requests'
   onBeforeRequest?: (request: Request) => Request
   onBeforeResponse?: (response: Response) => Response
 
@@ -59,10 +59,9 @@ export class ApiRequestsTool extends Tool implements RequestTool {
     }
   }
 
-  description = `A portal for making GET, POST, PUT, and DELETE requests to any APIs found through Openpm. 
-    Use this tool only for requests made to APIs that you already have the OpenAPI spec for.
-    Input should be a json string with three keys: "url", "method" and "data".
-    Url is a string, method is a string, and data is a dictionary of key-value pairs you want to send to the url as a JSON body.
+  description = `A portal for making HTTP requests to OpenAPI APIs found through Openpm, the OpenAPI package manager. 
+    Input should be a json string with four keys: "openapi_info_title", "url", "method" and "data".
+    "openapi_info_title" is the OpenAPI spec title. "url" is a full server url and path, method is a http method string, and data is a dictionary of key-value pairs you want to send to the url as a JSON body.
     If you want to send a request with no body, you can omit the "data" key.
     The output will be the raw text response of the API response.`
 }

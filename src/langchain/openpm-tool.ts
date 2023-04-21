@@ -20,7 +20,7 @@ export class OpenpmTool extends Tool {
   }
 
   get name(): string {
-    return this.package.name
+    return this.package.id
   }
 
   get description(): string {
