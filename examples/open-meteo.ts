@@ -20,7 +20,7 @@ async function main() {
   const agent = await initializeAgentExecutorWithOptions(
     tools,
     new ChatOpenAI({ temperature: 0, modelName: 'gpt-4' }),
-    { agentType: 'chat-zero-shot-react-description', verbose: true }
+    { agentType: 'chat-conversational-react-description', verbose: true }
   )
 
   const result = await agent.call({
