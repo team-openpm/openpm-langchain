@@ -3,32 +3,20 @@ import { getPackage } from '../openpm/packages'
 import { jsonStripNewlines } from './utils'
 import { Package } from '../openpm/types'
 
-export interface OpenToolParams {
-  apiKey?: string
-  proxy?: boolean
-}
-
-export class OpenpmTool extends Tool implements OpenToolParams {
+export class OpenpmTool extends Tool {
   package: Package
-  apiKey?: string
 
-  constructor(pkg: Package, params: OpenToolParams = {}) {
+  constructor(pkg: Package) {
     super()
     this.package = pkg
-    this.apiKey = params.apiKey || process.env.OPENPM_API_KEY
   }
 
   /** @ignore */
   async _call(_input: string) {
-    const prompt = [`Usage Guide: ${this.package.machine_description}`]
-
-    if (this.apiKey) {
-      prompt.push(`Openpm API Key for requests to openpm.ai: ${this.apiKey}`)
-    }
-
-    prompt.push(`OpenAPI Spec: ${jsonStripNewlines(this.package.openapi)}`)
-
-    return prompt.join('\n')
+    return [
+      `Usage Guide: ${this.package.machine_description}`,
+      `OpenAPI Spec: ${jsonStripNewlines(this.package.openapi)}`,
+    ].join('\n')
   }
 
   get name(): string {
@@ -39,8 +27,8 @@ export class OpenpmTool extends Tool implements OpenToolParams {
     return `Call this tool to get the OpenAPI spec (and usage guide) for interacting with the ${this.package.name} API. You should only call this ONCE! What is the ${this.package.name} API useful for? ${this.package.description}`
   }
 
-  static async fromPackageId(packageId: string, params: OpenToolParams = {}) {
-    const pkg = await getPackage(packageId, { proxy: params.proxy })
-    return new OpenpmTool(pkg, params)
+  static async fromPackageId(packageId: string, { proxy = false } = {}) {
+    const pkg = await getPackage(packageId, { proxy })
+    return new OpenpmTool(pkg)
   }
 }
