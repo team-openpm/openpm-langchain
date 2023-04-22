@@ -37,7 +37,7 @@ export class OpenpmTool extends StructuredTool {
   }
 
   get name(): string {
-    return `openapi-fetcher-${this.package.name}`
+    return `openapi-fetcher-${this.package.id}`
   }
 
   get description(): string {
