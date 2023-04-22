@@ -23,9 +23,6 @@
     "analyze": "size-limit --why",
     "examples:klarna": "tsx ./examples/klarna.ts"
   },
-  "peerDependencies": {
-    "langchain": "^0.0.60"
-  },
   "husky": {
     "hooks": {
       "pre-commit": "tsdx lint"
@@ -58,6 +55,6 @@
     "typescript": "^5.0.4"
   },
   "dependencies": {
-    "langchain": "^0.0.61"
+    "langchain": "^0.0.62"
   }
 }
