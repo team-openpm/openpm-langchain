@@ -1,50 +1,51 @@
-import { Tool } from 'langchain/tools'
-import { AIPluginTool } from 'langchain/tools'
+import { StructuredTool } from 'langchain/tools'
 import { getPackage } from '../openpm/packages'
 import { jsonStripNewlines } from './utils'
+import { Package } from '../openpm/types'
+import { z } from 'zod'
+import { Callbacks } from 'langchain/callbacks'
 
-export interface OpenToolParams {
-  name: string
-  description: string
-  apiSpec: string
-}
+export class OpenpmTool extends StructuredTool {
+  package: Package
 
-export class OpenpmTool extends Tool implements OpenToolParams {
-  private _name: string
+  schema = z
+    .object({ input: z.string().optional() })
+    .transform(obj => obj.input)
 
-  private _description: string
-
-  apiSpec: string
-
-  get name() {
-    return this._name
-  }
-
-  get description() {
-    return this._description
-  }
-
-  constructor(params: OpenToolParams) {
+  constructor(pkg: Package) {
     super()
-    this._name = params.name
-    this._description = params.description
-    this.apiSpec = params.apiSpec
+    this.package = pkg
+  }
+
+  call(
+    arg: string | z.input<this['schema']>,
+    callbacks?: Callbacks
+  ): Promise<string> {
+    return super.call(
+      typeof arg === 'string' || !arg ? { input: arg } : arg,
+      callbacks
+    )
   }
 
   /** @ignore */
   async _call(_input: string) {
-    return this.apiSpec
+    return [
+      `Usage Guide: ${this.package.machine_description ||
+        this.package.description}`,
+      `OpenAPI Spec: ${jsonStripNewlines(this.package.openapi)}`,
+    ].join('\n')
   }
 
-  static async fromPackageId(packageId: string) {
-    const pkg = await getPackage(packageId)
+  get name(): string {
+    return `openapi-fetcher-${this.package.name}`
+  }
 
-    return new AIPluginTool({
-      name: pkg.machine_name,
-      description: `Call this tool to get the OpenAPI spec (and usage guide) for interacting with the ${pkg.name} API. You should only call this ONCE! What is the ${pkg.name} API useful for? ${pkg.description}`,
-      apiSpec: `Usage Guide: ${pkg.machine_description}
+  get description(): string {
+    return `Call this tool to get the OpenAPI spec (and usage guide) for interacting with the ${this.package.name} API. You should only call this ONCE! What is the ${this.package.name} API useful for? ${this.package.description}`
+  }
 
-OpenAPI Spec: ${jsonStripNewlines(pkg.openapi)}`,
-    })
+  static async fromPackageId(packageId: string, { proxy = false } = {}) {
+    const pkg = await getPackage(packageId, { proxy })
+    return new OpenpmTool(pkg)
   }
 }

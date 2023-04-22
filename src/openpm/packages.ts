@@ -1,8 +1,20 @@
 import { Package } from './types'
 
-export async function getPackage(packageId: string): Promise<Package> {
-  const url = `https://openpm.ai/api/packages/${packageId}`
-  const request = await fetch(url)
+interface GetPackageOptions {
+  proxy?: boolean
+}
+
+export async function getPackage(
+  packageId: string,
+  { proxy }: GetPackageOptions
+): Promise<Package> {
+  const url = new URL(`https://openpm.ai/api/packages/${packageId}`)
+
+  if (proxy) {
+    url.searchParams.set('proxy', 'true')
+  }
+
+  const request = await fetch(url.toString())
 
   if (!request.ok) {
     throw new Error(
