@@ -3,7 +3,7 @@ import { getPackage } from '../openpm/packages'
 import { jsonStripNewlines } from './utils'
 import { Package } from '../openpm/types'
 import { z } from 'zod'
-import { Callbacks } from 'langchain/dist/callbacks'
+import { Callbacks } from 'langchain/callbacks'
 
 export class OpenpmTool extends StructuredTool {
   package: Package
@@ -30,13 +30,14 @@ export class OpenpmTool extends StructuredTool {
   /** @ignore */
   async _call(_input: string) {
     return [
-      `Usage Guide: ${this.package.machine_description}`,
+      `Usage Guide: ${this.package.machine_description ||
+        this.package.description}`,
       `OpenAPI Spec: ${jsonStripNewlines(this.package.openapi)}`,
     ].join('\n')
   }
 
   get name(): string {
-    return this.package.id
+    return `openapi-fetcher-${this.package.name}`
   }
 
   get description(): string {
